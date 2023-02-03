@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/txtSTAPromptQ"
-        android:layout_width="380dp"
-        android:layout_height="96dp"
+        android:layout_width="599dp"
+        android:layout_height="222dp"
         android:layout_marginTop="56dp"
         android:padding="15sp"
         android:text="Please write a paragraph with less than 150 words describing your day!"
@@ -21,8 +21,8 @@
 
     <EditText
         android:id="@+id/etxtSTAPromptA"
-        android:layout_width="326dp"
-        android:layout_height="366dp"
+        android:layout_width="631dp"
+        android:layout_height="529dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Begin typing by pressing here..."

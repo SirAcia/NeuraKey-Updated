@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".DTA">
 
+
+    <TextView
+        android:id="@+id/txtDTAPromptQ"
+        android:layout_width="379dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="56dp"
+        android:padding="15sp"
+        android:text="Please write a paragraph with less than 150 words describing your favourite hobby!"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etxtDTAPromptA"
+            android:layout_width="326dp"
+            android:layout_height="366dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Begin typing by pressing here..."
+            android:inputType="textShortMessage|textLongMessage|textMultiLine"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDTAPromptQ"
+            app:layout_constraintVertical_bias="0.382" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
