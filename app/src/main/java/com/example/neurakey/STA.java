@@ -17,6 +17,8 @@ public class STA extends AppCompatActivity {
     private TextView txtSTAPromptQ;
     private EditText etxtSTAPromptA;
     private Map<Character, Long> keyDownTimes = new HashMap<Character, Long>();
+    private Button btnSubmit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +31,15 @@ public class STA extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 System.out.println("Before");
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 System.out.println("On");
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' '){
+                if (s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' ') {
                     System.out.println("After");   //dp something
                 }
             }
@@ -59,6 +63,18 @@ public class STA extends AppCompatActivity {
         });
 
         txtSTAPromptQ = findViewById(R.id.txtSTAPromptQ);
+
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(this);
     }
 
+    public class subclass {
+        Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.btnSubmit) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new STAResults()).commit();
+                btnSubmit.setVisibility(View.GONE);
+            }
+        }
+    }
 }
