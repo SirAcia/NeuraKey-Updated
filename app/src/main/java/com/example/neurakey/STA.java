@@ -78,8 +78,10 @@ public class STA extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.btnSubmit) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new STAResults()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flContainer,new STAResults()).commit();
                     btnSubmit.setVisibility(View.GONE);
+                    txtSTAPromptQ.setVisibility(View.GONE);
+                    etxtSTAPromptA.setVisibility(View.GONE);
                 }
             }
         });
