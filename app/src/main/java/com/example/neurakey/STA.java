@@ -1,7 +1,7 @@
 package com.example.neurakey;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -63,18 +63,15 @@ public class STA extends AppCompatActivity {
         });
 
         txtSTAPromptQ = findViewById(R.id.txtSTAPromptQ);
-
         btnSubmit = findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(this);
-        public class subclass {
-            Override
-
-            public void onClick(View v) {
-                if (v.getId() == R.id.btnSubmit) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new STAResults()).commit();
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (v.getId()==R.id.btnSubmit){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flContainer,new STAResults()).commit();
                     btnSubmit.setVisibility(View.GONE);
                 }
             }
-        }
+        });
     }
 }

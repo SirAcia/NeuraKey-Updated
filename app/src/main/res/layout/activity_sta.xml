@@ -5,47 +5,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".STA">
-
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etxtSTAPromptA"
-        app:layout_constraintVertical_bias="0.673"
-        tools:ignore="OnClick"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-    <TextView
-        android:id="@+id/txtSTAPromptQ"
-        android:layout_width="599dp"
-        android:layout_height="222dp"
-        android:layout_marginTop="132dp"
-        android:padding="15sp"
-        android:text="Please write a paragraph with less than 150 words describing your day!"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/etxtSTAPromptA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etxtSTAPromptA"
-        android:layout_width="631dp"
-        android:layout_height="529dp"
-        android:layout_marginBottom="96dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Begin typing by pressing here..."
-        android:inputType="textShortMessage|textLongMessage|textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/txtSTAPromptQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15sp"
+                android:text="Please write a paragraph with less than 150 words describing your day!"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.611"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.208" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="this"
+                android:text="Submit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.883"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxtSTAPromptA"
+                app:layout_constraintVertical_bias="0.743"
+                tools:ignore="OnClick" />
+
+            <EditText
+                android:id="@+id/etxtSTAPromptA"
+                android:layout_width="498dp"
+                android:layout_height="218dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Begin typing by pressing here..."
+                android:inputType="textShortMessage|textLongMessage|textMultiLine"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSTAPromptQ"
+                app:layout_constraintVertical_bias="0.239" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
