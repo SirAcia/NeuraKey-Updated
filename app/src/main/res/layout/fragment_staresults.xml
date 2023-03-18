@@ -6,16 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".STAResults">
 
-    <Button
-        android:id="@+id/button"
+
+    <TextView
+        android:id="@+id/txtPHoldTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="267dp"
-        android:layout_marginEnd="206dp"
-        android:layout_marginBottom="416dp"
-        android:text="Button"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="428dp"
+        android:text="Average Hold Time:"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPTotalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="344dp"
+        android:text="Total Time:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPHoldTime"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/txtPReadability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="230dp"
+        android:text="Readability Score"
+        app:layout_constraintBottom_toTopOf="@+id/txtPHoldTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
