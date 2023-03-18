@@ -66,18 +66,6 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/txtResultsLinguistic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.968"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etxtSTAPromptA"
-        app:layout_constraintVertical_bias="0.886" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
