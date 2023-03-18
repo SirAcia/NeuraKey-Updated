@@ -24,6 +24,7 @@ public class STA extends AppCompatActivity {
     private EditText etxtSTAPromptA;
     private Map<Character, Long> keyDownTimes = new HashMap<Character, Long>();
     private TextView txtResultsLinguistic;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +37,15 @@ public class STA extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 System.out.println("Before");
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 System.out.println("On");
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' '){
+                if (s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' ') {
                     System.out.println("After");   //dp something
                 }
             }
@@ -69,6 +72,7 @@ public class STA extends AppCompatActivity {
         txtResultsLinguistic = findViewById(R.id.txtResultsLinguistic);
 
     }
+}
 
     public class linguisticAnalysis {
 
