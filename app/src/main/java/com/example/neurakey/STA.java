@@ -24,6 +24,8 @@ public class STA extends AppCompatActivity {
     private EditText etxtSTAPromptA;
     private Map<Character, Long> keyDownTimes = new HashMap<Character, Long>();
     private TextView txtResultsLinguistic;
+    private Button btnSubmit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,15 @@ public class STA extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 System.out.println("Before");
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 System.out.println("On");
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' '){
+                if (s != null && s.length() > 0 && s.charAt(s.length() - 1) == ' ') {
                     System.out.println("After");   //dp something
                 }
             }
@@ -68,7 +72,20 @@ public class STA extends AppCompatActivity {
         txtSTAPromptQ = findViewById(R.id.txtSTAPromptQ);
         txtResultsLinguistic = findViewById(R.id.txtResultsLinguistic);
 
+        txtSTAPromptQ = findViewById(R.id.txtSTAPromptQ);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.btnSubmit) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new STAResults()).commit();
+                    btnSubmit.setVisibility(View.GONE);
+                }
+            }
+        });
     }
+
+
 
     public class linguisticAnalysis {
 
