@@ -66,14 +66,14 @@ public class STA extends AppCompatActivity {
 
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
-    }
+        public class subclass {
+            Override
 
-    public class subclass {
-        Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.btnSubmit) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new STAResults()).commit();
-                btnSubmit.setVisibility(View.GONE);
+            public void onClick(View v) {
+                if (v.getId() == R.id.btnSubmit) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new STAResults()).commit();
+                    btnSubmit.setVisibility(View.GONE);
+                }
             }
         }
     }
