@@ -31,7 +31,7 @@ public class STA extends AppCompatActivity {
     private Button btnSubmit;
     private long totalHoldTime = 0;
     private int numKeyPresses = 0;
-
+    private long startTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +65,15 @@ public class STA extends AppCompatActivity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     long keyDownTime = System.currentTimeMillis();
                     keyDownTimes.put(keyChar, keyDownTime);
+                    if (startTime == 0) {
+                        startTime = keyDownTime;
+                    }
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     long keyUpTime = System.currentTimeMillis();
                     long duration = keyUpTime - keyDownTimes.get(keyChar);
                     System.out.println("Key down duration for " + keyChar + ": " + duration + " ms");
+                    totalHoldTime += duration;
+                    numKeyPresses++;
                     keyDownTimes.remove(keyChar);
                 }
                 return false;
@@ -110,13 +115,16 @@ public class STA extends AppCompatActivity {
                 }
                 if (v.getId() == R.id.btnSubmit) {
                     double avgHoldTime = totalHoldTime / (double) numKeyPresses;
+                    long totalTime = System.currentTimeMillis() - startTime;
                     System.out.println("Average hold time: " + avgHoldTime + " ms");
+                    System.out.println("Total time: " + totalTime + " ms");
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContainer, new STAResults());
                     transaction.commit();
                     btnSubmit.setVisibility(View.GONE);
                     txtSTAPromptQ.setVisibility(View.GONE);
                     etxtSTAPromptA.setVisibility(View.GONE);
+                    startTime = 0;
                 }
             }
         });
