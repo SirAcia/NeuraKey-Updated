@@ -1,11 +1,16 @@
 package com.example.neurakey;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +18,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.text.TextWatcher;
 import android.text.Editable;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,8 +125,8 @@ public class STA extends AppCompatActivity {
                 if (v.getId() == R.id.btnSubmit) {
                     double avgHoldTime = totalHoldTime / (double) numKeyPresses;
                     long totalTime = System.currentTimeMillis() - startTime;
-                    System.out.println("Average hold time: " + avgHoldTime + " ms");
-                    System.out.println("Total time: " + totalTime + " ms");
+                    System.out.println("Average hold time: " + avgHoldTime + " ms"); //HOLD TIME OUTPUT
+                    System.out.println("Total time: " + totalTime + " ms"); //TOTAL TIME OUTPUT
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContainer, new STAResults());
                     transaction.commit();
@@ -125,91 +138,68 @@ public class STA extends AppCompatActivity {
             }
         });
     }
+
     public class linguisticAnalysis {
-        public double readabilityScore(String text) {
-            if (text == null || text.isEmpty()) {
-                return 0;
+        private String readFromFile(Context context) {
+
+            String ret = "";
+
+            try {
+                InputStream inputStream = context.openFileInput("UserInput.txt");
+
+                if (inputStream != null) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString = "";
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((receiveString = bufferedReader.readLine()) != null) {
+                        stringBuilder.append("\n").append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e("login activity", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("login activity", "Can not read file: " + e.toString());
             }
-            double chars = charsCount(text);
-            double words = wordsCount(text);
-            double sentences = sentencesCount(text);
-            double readability = Math.round((4.71 * chars / words + 0.5 * words / sentences - 21.43) * 100.0) / 100.0;
-            return Math.max(0.0, readability);   // if readability is less than 0, we return 0
+            return ret;
         }
 
-        public double charsCount(String text) {
-            if (text == null || text.isEmpty()) {
-                return 0L;
-            }
-            Pattern charPattern = Pattern.compile("\\S");
-            Matcher charMatcher = charPattern.matcher(text);
+    }
 
-            // check this part of code
-            int charFrom = 0;
-            int charCount = 0;
-            while (charMatcher.find(charFrom)) {
-                charCount++;
-                charFrom = charMatcher.start() + 1;
-            }
-            return Math.max(0.0, charCount); // if character count is less than 0, we return 0
-        }
+    public class LingAnalysis {
 
+        private static final double DOUBLE0_5 = 0.5;
+        private static final double DOUBLE4_71 = 4.71;
+        private static final double DOUBLE21_43 = 21.43;
 
-        public double wordsCount(String text) {
-            if (text == null || text.isEmpty()) {
-                return 0L;
-            }
-            Pattern wordPattern = Pattern.compile("\\S+");
-            Matcher wordMatcher = wordPattern.matcher(text);
-            // check this part of code
-            int wordFrom = 0;
-            int wordCount = 0;
-            while (wordMatcher.find(wordFrom)) {
-                wordCount++;
-                wordFrom = wordMatcher.start() + 1;
-            }
-            return Math.max(0.0, wordCount); // if word count is less than 0, we return 0
-        }
-
-        public double sentencesCount(String text) {
-            if (text == null || text.isEmpty()) {
-                return 0L;
-            }
-            Pattern sentencePattern = Pattern.compile("[^.?!]+");
-            Matcher sentenceMatcher = sentencePattern.matcher(text);
-            // check this part of code
-            int sentenceFrom = 0;
-            int sentenceCount = 0;
-            while (sentenceMatcher.find(sentenceFrom)) {
-                sentenceCount++;
-                sentenceFrom = sentenceMatcher.start() + 1;
-            }
-            return Math.max(0.0, sentenceCount); // if sentence count is less than 0, we return 0
-        }
-
-        public String ageBracket(int readabilityTruncated) {
-            int lowerAge = readabilityTruncated + 5;
-            int upperAge = readabilityTruncated > 13 ? 22 : readabilityTruncated + 6;
-            return String.format("%d-%d", lowerAge, upperAge);
+        public String readFileToString(String fName) throws IOException {
+            return new String(Files.readAllBytes(Paths.get(fName)));
         }
 
         public void main(String[] args) {
-            if (args.length != 1) {
-                System.out.println("You must provide a valid path for the file containing your text.");
-                return;
+            try {
+                String text = readFileToString(args[0]);
+                int scoreFloorPrecision = 2;  // args[1]
+
+                int sentences = text.split("[?.!]+\\s*").length;
+                int words = text.split("\\s*(?<!\\d)[-?.!,:;\\s]+|[-?.!,:;\\s]+(?!\\d)\\s*").length;
+                int characters = text.replace("\\s", "").length();
+
+                double score = DOUBLE4_71 * characters / words + DOUBLE0_5 * words / sentences - DOUBLE21_43;
+
+
+            } catch (IOException err) {
+                System.out.println(err.getMessage());
             }
-            /* try {
-                final Paths path = Paths.get(args[0]);
-                final var text = Files.readString(path);
-                System.out.println("The text is:");
-                System.out.println(text);
-                System.out.println();
-                System.out.println(formattedReadabilityData(text));
-            } catch (InvalidPathException ipe) {
-                System.out.println("Invalid path");
-            } catch (IOException ioe) {
-                System.out.println("Cannot read file");
-            }  */
+        }
+
+        public double truncate(double n, int decimals) {
+            int whole = (int) (n * Math.pow(10, decimals));
+            return whole / Math.pow(10, decimals);
         }
     }
 }
