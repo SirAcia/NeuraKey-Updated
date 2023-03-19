@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,9 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.text.TextWatcher;
 import android.text.Editable;
-import android.widget.Toast;
 import java.util.regex.Pattern;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -130,84 +126,79 @@ public class STA extends AppCompatActivity {
         });
     }
     public class linguisticAnalysis {
-
-    public double readabilityScore(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0;
-        }
-        long chars = charsCount(text);
-        long words = wordsCount(text);
-        long sentences = sentencesCount(text);
-        double readability = Math.round((4.71 * chars / words + 0.5 * words / sentences - 21.43) * 100.0) / 100.0;
-        return Math.max(0.0, readability);   // if readability is less than 0, we return 0
-    }
-
-    public long charsCount(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0L;
-        }
-        Pattern charPattern = Pattern.compile("\\S");
-        Matcher charMatcher = charPattern.matcher(text);
-
-        // check this part of code
-        int charFrom = 0;
-        int charCount = 0;
-        while(charMatcher.find(charFrom)) {
-            charCount++;
-            charFrom = charMatcher.start() + 1;
-        }
-        System.out.println(charCount);
-
-    }
-
-    public long wordsCount(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0L;
-        }
-        Pattern wordPattern = Pattern.compile("\\S+");
-        Matcher wordMatcher = wordPattern.matcher(text);
-        // check this part of code
-        int wordFrom = 0;
-        int wordCount = 0;
-        while(wordMatcher.find(wordFrom)) {
-            wordCount++;
-            wordFrom = wordMatcher.start() + 1;
-        }
-        System.out.println(wordCount);
-    }
-
-    public long sentencesCount(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0L;
-        }
-        Pattern sentencePattern = Pattern.compile("[^.?!]+");
-        Matcher sentenceMatcher = sentencePattern.matcher(text);
-        // check this part of code
-        int sentenceFrom = 0;
-        int sentenceCount = 0;
-        while(sentenceMatcher.find(sentenceFrom)) {
-            sentenceCount++;
-            sentenceFrom = sentenceMatcher.start() + 1;
-        }
-        //WHY NEED RETURN STATMENT?
-        return "System.out.println(sentenceCount)";
-    }
-}
-
-    public static String ageBracket(int readabilityTruncated) {
-        int lowerAge = readabilityTruncated + 5;
-        int upperAge = readabilityTruncated > 13 ? 22 : readabilityTruncated + 6;
-        return String.format("%d-%d", lowerAge, upperAge);
-    }
-
-    public void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("You must provide a valid path for the file containing your text.");
-            return;
+        public double readabilityScore(String text) {
+            if (text == null || text.isEmpty()) {
+                return 0;
+            }
+            double chars = charsCount(text);
+            double words = wordsCount(text);
+            double sentences = sentencesCount(text);
+            double readability = Math.round((4.71 * chars / words + 0.5 * words / sentences - 21.43) * 100.0) / 100.0;
+            return Math.max(0.0, readability);   // if readability is less than 0, we return 0
         }
 
-            /*
-            try {
+        public double charsCount(String text) {
+            if (text == null || text.isEmpty()) {
+                return 0L;
+            }
+            Pattern charPattern = Pattern.compile("\\S");
+            Matcher charMatcher = charPattern.matcher(text);
+
+            // check this part of code
+            int charFrom = 0;
+            int charCount = 0;
+            while (charMatcher.find(charFrom)) {
+                charCount++;
+                charFrom = charMatcher.start() + 1;
+            }
+            return Math.max(0.0, charCount); // if character count is less than 0, we return 0
+        }
+
+
+        public double wordsCount(String text) {
+            if (text == null || text.isEmpty()) {
+                return 0L;
+            }
+            Pattern wordPattern = Pattern.compile("\\S+");
+            Matcher wordMatcher = wordPattern.matcher(text);
+            // check this part of code
+            int wordFrom = 0;
+            int wordCount = 0;
+            while (wordMatcher.find(wordFrom)) {
+                wordCount++;
+                wordFrom = wordMatcher.start() + 1;
+            }
+            return Math.max(0.0, wordCount); // if word count is less than 0, we return 0
+        }
+
+        public double sentencesCount(String text) {
+            if (text == null || text.isEmpty()) {
+                return 0L;
+            }
+            Pattern sentencePattern = Pattern.compile("[^.?!]+");
+            Matcher sentenceMatcher = sentencePattern.matcher(text);
+            // check this part of code
+            int sentenceFrom = 0;
+            int sentenceCount = 0;
+            while (sentenceMatcher.find(sentenceFrom)) {
+                sentenceCount++;
+                sentenceFrom = sentenceMatcher.start() + 1;
+            }
+            return Math.max(0.0, sentenceCount); // if sentence count is less than 0, we return 0
+        }
+
+        public String ageBracket(int readabilityTruncated) {
+            int lowerAge = readabilityTruncated + 5;
+            int upperAge = readabilityTruncated > 13 ? 22 : readabilityTruncated + 6;
+            return String.format("%d-%d", lowerAge, upperAge);
+        }
+
+        public void main(String[] args) {
+            if (args.length != 1) {
+                System.out.println("You must provide a valid path for the file containing your text.");
+                return;
+            }
+            /* try {
                 final Paths path = Paths.get(args[0]);
                 final var text = Files.readString(path);
                 System.out.println("The text is:");
@@ -218,10 +209,7 @@ public class STA extends AppCompatActivity {
                 System.out.println("Invalid path");
             } catch (IOException ioe) {
                 System.out.println("Cannot read file");
-            }
-             */
-
+            }  */
+        }
     }
-
 }
-
