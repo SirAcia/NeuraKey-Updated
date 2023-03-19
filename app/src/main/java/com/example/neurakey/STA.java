@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,10 +16,12 @@ import android.widget.TextView;
 import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.Toast;
+import java.util.regex.Pattern;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
+
 
 public class STA extends AppCompatActivity {
     private TextView txtSTAPromptQ;
@@ -25,6 +29,8 @@ public class STA extends AppCompatActivity {
     private Map<Character, Long> keyDownTimes = new HashMap<Character, Long>();
     private TextView txtResultsLinguistic;
     private Button btnSubmit;
+    private long totalHoldTime = 0;
+    private int numKeyPresses = 0;
 
 
     @Override
@@ -103,7 +109,11 @@ public class STA extends AppCompatActivity {
                     }
                 }
                 if (v.getId() == R.id.btnSubmit) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new STAResults()).commit();
+                    double avgHoldTime = totalHoldTime / (double) numKeyPresses;
+                    System.out.println("Average hold time: " + avgHoldTime + " ms");
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContainer, new STAResults());
+                    transaction.commit();
                     btnSubmit.setVisibility(View.GONE);
                     txtSTAPromptQ.setVisibility(View.GONE);
                     etxtSTAPromptA.setVisibility(View.GONE);
@@ -111,8 +121,7 @@ public class STA extends AppCompatActivity {
             }
         });
     }
-}
-public class linguisticAnalysis {
+    public class linguisticAnalysis {
 
     public double readabilityScore(String text) {
         if (text == null || text.isEmpty()) {
